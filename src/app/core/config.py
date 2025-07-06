@@ -1,10 +1,19 @@
-from environs import Env
+from pydantic_settings import BaseSettings
+from typing import List
 
-env = Env()
-env.read_env()
+class Settings(BaseSettings):
+    bot_token: str
+    db_user: str
+    db_password: str
+    db_name: str
+    db_host: str = "localhost"
+    db_port: int = 5432
 
 
-class Settings:
-    bot_token = env.str("BOT_TOKEN")
-    db_name = env.str("DB_NAME")
-    superadmin_ids = env.list("ADMIN_IDS", subcast=int)
+    admin_ids: List[int]
+
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8"
+    }
+

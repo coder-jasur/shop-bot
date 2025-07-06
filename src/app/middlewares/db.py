@@ -1,20 +1,25 @@
-from typing import Callable, Any, Awaitable
+from typing import Callable, Awaitable, Dict, Any
 
-#import aiosqlite
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
+from asyncpg import Pool
 
-from src.app.core.config import Settings
+
+class DatabaseMiddleware(BaseMiddleware):
+    def __init__(self, pool: Pool):
+        self.pool = pool
+
+    async def __call__(
+        self,
+        handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+        event: TelegramObject,
+        data: Dict[str, Any],
+    ) -> Any:
+        async with self.pool.acquire() as conn:
+            data["conn"] = conn
+            return await handler(event, data)
 
 
-#class DatabaseMiddleware(BaseMiddleware):
-#    async def __call__(
-#        self,
-#        handler: Callable[[TelegramObject, dict[str, Any]], Awaitable[Any]],
-#        event: TelegramObject,
-#        data: dict[str, Any],
-#    ) -> None:
-#        settings: Settings = data["settings"]
-#        async with aiosqlite.connect(settings.db_name) as conn:
-#            data["conn"] = conn
-#            await handler(event, data)
+
+
+
