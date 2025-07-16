@@ -1,4 +1,5 @@
 from aiogram import Dispatcher, Router
+from aiogram.types import CallbackQuery
 
 from src.app.core.config import Settings
 from src.app.handlers.admin import register_admin_routers

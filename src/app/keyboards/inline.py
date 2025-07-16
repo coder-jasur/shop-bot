@@ -28,10 +28,13 @@ admin_main_panel = InlineKeyboardMarkup(
             InlineKeyboardButton(text="🚀 Рассылка", callback_data="mailing")
         ],
         [
-            InlineKeyboardButton(text="📊 Статистика", callback_data="Statistics")
+            InlineKeyboardButton(text="📊 Статистика", callback_data="statistics")
         ],
         [
-            InlineKeyboardButton(text="🚫 Блокировка/разблокировка", callback_data="Blocking/unblocking")
+            InlineKeyboardButton(text="🚫 Блокировка/разблокировка", callback_data="blocking/unblocking")
+        ],
+        [
+            InlineKeyboardButton(text="📋 Канал", callback_data="channel_settings")
         ]
     ]
 )
@@ -39,7 +42,7 @@ admin_main_panel = InlineKeyboardMarkup(
 quit_to_admin_menu = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text="🔙 Назад", callback_data="quit_to_admin_menu")
+            InlineKeyboardButton(text="🔙 Назад", callback_data="back_to_admin_menu")
         ]
     ]
 )

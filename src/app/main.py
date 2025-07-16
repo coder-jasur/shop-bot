@@ -3,6 +3,7 @@ import logging
 
 import asyncpg
 from aiogram import Bot, Dispatcher
+from aiogram.types import CallbackQuery
 from dependency_injector import containers, providers
 
 from src.app.common.get_db_url import construct_postgresql_url
@@ -18,6 +19,7 @@ logging.basicConfig(level="INFO")
 
 async def main():
     container = AppContainer()
+
     try:
         await container.init_resources()
         settings = container.config()
@@ -28,7 +30,7 @@ async def main():
 
         dp = Dispatcher()
 
-        register_middlewares(dp=dp, _settings=settings, pool=pool)
+        register_middlewares(dp=dp, _settings=settings, db_pool=pool)
         register_routers(dp, settings)
 
         await dp.start_polling(bot, **{"db_pool": pool, "container": container})
